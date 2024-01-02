@@ -1,4 +1,4 @@
-module github.com/go-curses/corelibs/maps
+module github.com/go-corelibs/maps
 
 go 1.21.0
 
