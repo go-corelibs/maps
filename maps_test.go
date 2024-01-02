@@ -27,9 +27,12 @@ func TestSortedKeys(t *testing.T) {
 			"one":  {},
 			"two":  {},
 			"many": {},
+			"v1":   {},
+			"v10":  {},
+			"v2":   {},
 		}
 		So(SortedKeys(m), ShouldEqual, []string{
-			"many", "one", "two",
+			"many", "one", "two", "v1", "v2", "v10",
 		})
 	})
 
