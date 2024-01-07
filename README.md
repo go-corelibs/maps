@@ -2,9 +2,9 @@
 [![codecov](https://codecov.io/gh/go-corelibs/maps/graph/badge.svg?token=7gcECAViv5)](https://codecov.io/gh/go-corelibs/maps)
 [![Go Report Card](https://goreportcard.com/badge/github.com/go-corelibs/maps)](https://goreportcard.com/report/github.com/go-corelibs/maps)
 
-# go-corelibs/maps - go map type utilities
+# maps - go map type utilities
 
-maps is a packge for general purpose map-type things, such as getting a
+maps is a package for general purpose map-type things, such as getting a
 list of naturally `SortedKeys`.
 
 # Installation
@@ -13,7 +13,7 @@ list of naturally `SortedKeys`.
 > go get github.com/go-corelibs/maps@latest
 ```
 
-# Description
+# Examples
 
 ## SortedKeys
 
