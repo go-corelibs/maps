@@ -3,7 +3,7 @@ module github.com/go-corelibs/maps
 go 1.21.0
 
 require (
-	github.com/go-corelibs/maths v1.0.0
+	github.com/go-corelibs/maths v1.0.1
 	github.com/maruel/natural v1.1.1
 	github.com/smartystreets/goconvey v1.8.1
 )
