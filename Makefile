@@ -2,6 +2,6 @@
 
 VERSION_TAGS += MAPS
 MAPS_MK_SUMMARY := go-corelibs/maps
-MAPS_MK_VERSION := v1.0.1
+MAPS_MK_VERSION := v1.0.2
 
 include CoreLibs.mk
