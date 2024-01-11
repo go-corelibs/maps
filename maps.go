@@ -34,6 +34,7 @@ func SortedKeys[K ~string, V interface{}](data map[K]V) (keys []K) {
 	return
 }
 
+// SortedNumbers returns a slice of ascending sorted keys from the given map
 func SortedNumbers[K maths.Number, V interface{}](data map[K]V) (keys []K) {
 	for key := range data {
 		keys = append(keys, key)
@@ -44,6 +45,7 @@ func SortedNumbers[K maths.Number, V interface{}](data map[K]V) (keys []K) {
 	return
 }
 
+// ReverseSortedNumbers returns a slice of descending sorted keys from the given map
 func ReverseSortedNumbers[K maths.Number, V interface{}](data map[K]V) (keys []K) {
 	for key := range data {
 		keys = append(keys, key)
