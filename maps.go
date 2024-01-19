@@ -55,3 +55,11 @@ func ReverseSortedNumbers[K maths.Number, V interface{}](data map[K]V) (keys []K
 	})
 	return
 }
+
+// ValuesSortedByKeys returns a slice of values, ordered by SortedKeys
+func ValuesSortedByKeys[K ~string, V interface{}](data map[K]V) (values []V) {
+	for _, k := range SortedKeys(data) {
+		values = append(values, data[k])
+	}
+	return
+}
