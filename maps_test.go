@@ -88,4 +88,15 @@ func TestSortedNumbers(t *testing.T) {
 			"first", "second", "last",
 		})
 	})
+
+	Convey("ValuesSortedByNumbers", t, func() {
+		m := map[int]string{
+			1:  "first",
+			2:  "second",
+			10: "last",
+		}
+		So(ValuesSortedByNumbers(m), ShouldEqual, []string{
+			"first", "second", "last",
+		})
+	})
 }

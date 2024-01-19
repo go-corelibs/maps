@@ -63,3 +63,11 @@ func ValuesSortedByKeys[K ~string, V interface{}](data map[K]V) (values []V) {
 	}
 	return
 }
+
+// ValuesSortedByNumbers returns a slice of values, ordered by SortedNumbers
+func ValuesSortedByNumbers[K maths.Number, V interface{}](data map[K]V) (values []V) {
+	for _, k := range SortedNumbers(data) {
+		values = append(values, data[k])
+	}
+	return
+}
