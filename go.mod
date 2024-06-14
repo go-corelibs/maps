@@ -1,6 +1,6 @@
 module github.com/go-corelibs/maps
 
-go 1.21.0
+go 1.22.4
 
 require (
 	github.com/go-corelibs/maths v1.0.1
