@@ -15,28 +15,28 @@
 package maps
 
 import (
-	"testing"
+	"strconv"
 
-	. "github.com/smartystreets/goconvey/convey"
+	"github.com/go-corelibs/rxp"
 )
 
-func Test(t *testing.T) {
+var (
+	rxKeySlice = rxp.Pattern{}.
+		Caret().
+		Add(rxp.IsFieldKey("c")).
+		Text("[").
+		D("*", "c").
+		Text("]").
+		Dollar()
+)
 
-	Convey("MakeTypedKey", t, func() {
-		m := map[string]map[string]struct{}{}
-		So(MakeTypedKey(m, "testing"), ShouldBeTrue)
-		So(m, ShouldEqual, map[string]map[string]struct{}{
-			"testing": {},
-		})
-		So(MakeTypedKey(m, "testing"), ShouldBeFalse)
-		So(m, ShouldEqual, map[string]map[string]struct{}{
-			"testing": {},
-		})
-		So(MakeTypedKey(m, "moartest"), ShouldBeTrue)
-		So(m, ShouldEqual, map[string]map[string]struct{}{
-			"testing":  {},
-			"moartest": {},
-		})
-	})
-
+func ParseDeepKeySlice(input string) (key string, idx int, ok bool) {
+	km := rxKeySlice.FindStringSubmatch(input)
+	if idx, ok = -1, len(km) == 3; ok {
+		if km[2] != "" {
+			idx, _ = strconv.Atoi(km[2])
+		}
+		key = km[1]
+	}
+	return
 }

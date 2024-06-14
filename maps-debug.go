@@ -15,28 +15,28 @@
 package maps
 
 import (
-	"testing"
+	"bytes"
 
-	. "github.com/smartystreets/goconvey/convey"
+	"github.com/gookit/goutil/dump"
 )
 
-func Test(t *testing.T) {
+var (
+	gDumper *dump.Dumper
+)
 
-	Convey("MakeTypedKey", t, func() {
-		m := map[string]map[string]struct{}{}
-		So(MakeTypedKey(m, "testing"), ShouldBeTrue)
-		So(m, ShouldEqual, map[string]map[string]struct{}{
-			"testing": {},
-		})
-		So(MakeTypedKey(m, "testing"), ShouldBeFalse)
-		So(m, ShouldEqual, map[string]map[string]struct{}{
-			"testing": {},
-		})
-		So(MakeTypedKey(m, "moartest"), ShouldBeTrue)
-		So(m, ShouldEqual, map[string]map[string]struct{}{
-			"testing":  {},
-			"moartest": {},
-		})
-	})
-
+// Dump is a convenience wrapper around [github.com/gookit/goutil/dump]
+// to return a human-readable representation of the given map
+//
+// Only really useful during ad-hoc development cycles
+func Dump[T comparable, V interface{}](m map[T]V) (pretty string) {
+	if gDumper == nil {
+		gDumper = dump.NewWithOptions(
+			dump.WithoutPosition(),
+			dump.WithoutColor(),
+			dump.WithoutOutput(&bytes.Buffer{}),
+		)
+	}
+	var buf bytes.Buffer
+	gDumper.Fprint(&buf, m)
+	return buf.String()
 }

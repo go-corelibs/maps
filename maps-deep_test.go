@@ -15,28 +15,32 @@
 package maps
 
 import (
+	"fmt"
 	"testing"
 
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func Test(t *testing.T) {
+func TestDeep(t *testing.T) {
+	Convey("ParseDeepKeySlice", t, func() {
 
-	Convey("MakeTypedKey", t, func() {
-		m := map[string]map[string]struct{}{}
-		So(MakeTypedKey(m, "testing"), ShouldBeTrue)
-		So(m, ShouldEqual, map[string]map[string]struct{}{
-			"testing": {},
-		})
-		So(MakeTypedKey(m, "testing"), ShouldBeFalse)
-		So(m, ShouldEqual, map[string]map[string]struct{}{
-			"testing": {},
-		})
-		So(MakeTypedKey(m, "moartest"), ShouldBeTrue)
-		So(m, ShouldEqual, map[string]map[string]struct{}{
-			"testing":  {},
-			"moartest": {},
-		})
+		for idx, test := range []struct {
+			input string
+			key   string
+			index int
+			ok    bool
+		}{
+			{"this[10]", "this", 10, true},
+			{"this-thing[10]", "this-thing", 10, true},
+			{"this[]", "this", -1, true},
+			{"this[nope]", "", -1, false},
+		} {
+			prefix := fmt.Sprintf("test #%d ", idx)
+			key, index, ok := ParseDeepKeySlice(test.input)
+			SoMsg(prefix+"(ok)", ok, ShouldEqual, test.ok)
+			SoMsg(prefix+"(key)", key, ShouldEqual, test.key)
+			SoMsg(prefix+"(idx)", index, ShouldEqual, test.index)
+		}
+
 	})
-
 }

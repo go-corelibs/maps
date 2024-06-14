@@ -20,23 +20,16 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func Test(t *testing.T) {
-
-	Convey("MakeTypedKey", t, func() {
-		m := map[string]map[string]struct{}{}
-		So(MakeTypedKey(m, "testing"), ShouldBeTrue)
-		So(m, ShouldEqual, map[string]map[string]struct{}{
-			"testing": {},
-		})
-		So(MakeTypedKey(m, "testing"), ShouldBeFalse)
-		So(m, ShouldEqual, map[string]map[string]struct{}{
-			"testing": {},
-		})
-		So(MakeTypedKey(m, "moartest"), ShouldBeTrue)
-		So(m, ShouldEqual, map[string]map[string]struct{}{
-			"testing":  {},
-			"moartest": {},
-		})
+func TestCopy(t *testing.T) {
+	Convey("CopyBaseType", t, func() {
+		a := map[string]int{"one": 1, "two": 2}
+		b := map[string]int{"one": 1, "two": 2}
+		So(CopyBaseType(a), ShouldEqual, b)
 	})
 
+	Convey("DeepCopy", t, func() {
+		a := map[string]interface{}{"one": 1, "two": "2", "many": map[string]int{"more": -1}}
+		b := map[string]interface{}{"one": 1, "two": "2", "many": map[string]int{"more": -1}}
+		So(DeepCopy(a), ShouldEqual, b)
+	})
 }

@@ -1,4 +1,4 @@
-// Copyright (c) 2023  The Go-Curses Authors
+// Copyright (c) 2024  The Go-CoreLibs Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,59 +15,36 @@
 package maps
 
 import (
-	"sort"
-
-	"github.com/maruel/natural"
-
-	"github.com/go-corelibs/maths"
+	"reflect"
 )
 
-// SortedKeys returns a slice of natural-sorted keys from the given map
-func SortedKeys[K ~string, V interface{}](data map[K]V) (keys []K) {
-	for key := range data {
-		keys = append(keys, key)
-	}
-	sort.Slice(keys, func(i, j int) (less bool) {
-		less = natural.Less(string(keys[i]), string(keys[j]))
-		return
-	})
-	return
-}
-
-// SortedNumbers returns a slice of ascending sorted keys from the given map
-func SortedNumbers[K maths.Number, V interface{}](data map[K]V) (keys []K) {
-	for key := range data {
-		keys = append(keys, key)
-	}
-	sort.Slice(keys, func(i, j int) bool {
-		return keys[i] < keys[j]
-	})
-	return
-}
-
-// ReverseSortedNumbers returns a slice of descending sorted keys from the given map
-func ReverseSortedNumbers[K maths.Number, V interface{}](data map[K]V) (keys []K) {
-	for key := range data {
-		keys = append(keys, key)
-	}
-	sort.Slice(keys, func(i, j int) bool {
-		return keys[i] > keys[j]
-	})
-	return
-}
-
-// ValuesSortedByKeys returns a slice of values, ordered by SortedKeys
-func ValuesSortedByKeys[K ~string, V interface{}](data map[K]V) (values []V) {
-	for _, k := range SortedKeys(data) {
-		values = append(values, data[k])
-	}
-	return
-}
-
-// ValuesSortedByNumbers returns a slice of values, ordered by SortedNumbers
-func ValuesSortedByNumbers[K maths.Number, V interface{}](data map[K]V) (values []V) {
-	for _, k := range SortedNumbers(data) {
-		values = append(values, data[k])
+// MakeTypedKey is used to simplify the adding of more map values to a parent
+// map without having to check if the value map exists already or needs to be
+// created first
+//
+// Example:
+//
+//	// Standard way
+//	m := make(map[string]map[string]struct{})
+//	if _, present := m["top"]; !present {
+//	  m["top"] = make(map[string]struct{})
+//	}
+//	m["top"]["thing"] = struct{}{}
+//
+//	// Using MakeTypedKey
+//	m := make(map[string]map[string]struct{})
+//	_ = maps.MakeTypedKey(m, "top")
+//	m["top"]["thing"] = struct{}{}
+func MakeTypedKey[K comparable, L comparable, V interface{}, M map[L]V](m map[K]M, key K) (made bool) {
+	if _, present := m[key]; !present {
+		var l L
+		var v V
+		kt, vt := reflect.TypeOf(l), reflect.TypeOf(v)
+		mt := reflect.MapOf(kt, vt)
+		mv := reflect.MakeMapWithSize(mt, 0)
+		mi := mv.Interface()
+		m[key], _ = mi.(M)
+		return true
 	}
 	return
 }

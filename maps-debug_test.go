@@ -20,23 +20,14 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func Test(t *testing.T) {
+func TestDebug(t *testing.T) {
+	Convey("Dump", t, func() {
 
-	Convey("MakeTypedKey", t, func() {
-		m := map[string]map[string]struct{}{}
-		So(MakeTypedKey(m, "testing"), ShouldBeTrue)
-		So(m, ShouldEqual, map[string]map[string]struct{}{
-			"testing": {},
-		})
-		So(MakeTypedKey(m, "testing"), ShouldBeFalse)
-		So(m, ShouldEqual, map[string]map[string]struct{}{
-			"testing": {},
-		})
-		So(MakeTypedKey(m, "moartest"), ShouldBeTrue)
-		So(m, ShouldEqual, map[string]map[string]struct{}{
-			"testing":  {},
-			"moartest": {},
-		})
+		So(Dump(map[string]struct{}{"this": {}}), ShouldEqual, `map[string]struct {} { #len=1
+  "this": struct {} {
+  },
+},
+`)
+
 	})
-
 }
