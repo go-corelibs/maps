@@ -299,3 +299,16 @@ func DeleteKV(c map[string]interface{}, key string) (deleted bool) {
 	}
 	return false
 }
+
+// GetFirstValue returns the value for the first matching key of keys given
+//
+// This is useful for maintaining backwards compatibility when an API or other
+// semantics change for a given dataset.
+func GetFirstValue(c map[string]interface{}, keys ...string) (first interface{}, ok bool) {
+	for _, key := range keys {
+		if first, ok = c[key]; ok {
+			return
+		}
+	}
+	return
+}
