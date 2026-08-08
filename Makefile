@@ -3,6 +3,6 @@
 CORELIB_PKG := go-corelibs/maps
 VERSION_TAGS += MAIN
 MAIN_MK_SUMMARY := ${CORELIB_PKG}
-MAIN_MK_VERSION := v1.2.0
+MAIN_MK_VERSION := v1.3.1
 
 include CoreLibs.mk
