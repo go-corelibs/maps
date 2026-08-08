@@ -6,7 +6,7 @@ CORELIB_NAME := $(shell echo "${CORELIB_PKG}" | perl -pe 's!(?:github.com/)?go-c
 
 VERSION_TAGS        += CORELIBS
 CORELIBS_MK_SUMMARY := Go-CoreLibs.mk
-CORELIBS_MK_VERSION := v0.2.1
+CORELIBS_MK_VERSION := v0.2.2
 
 GOPKG_KEYS          ?=
 GOPKG_AUTO_CORELIBS ?= true
